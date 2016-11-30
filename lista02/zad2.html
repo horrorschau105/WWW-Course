@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+<meta charset="UTF-8">
+</head>
+<style>
+date:invalid {
+  border: 1px solid red;
+}
+ </style>
+<body>
+
+
+<form>
+	Nr konta: 	<input type="text" id="accno" required pattern="\d{26}"> </input>
+	<br></br>
+	Imię: 	<input type="text" id="Imie" required pattern="*[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{50}"> </input>
+	<br></br>
+	Nazwisko: 	<input type="text" id="name" required pattern="*[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{50}"> </input>
+	<br></br>
+	Email: 	<input type="email" id="email" required> </input>
+	<br></br>
+	Adres: 	<input type="text" id="adres" required> </input>
+	<br></br>
+	Kod pocztowy: 	<input type="text" id="postcode" required pattern="\d{2}-\d{3}"> </input>
+	<br></br>
+	Miasto: 
+	<input list="city" type="text">
+	<datalist id="city">
+		<option value="Wrocław">
+		<option value="Kraków">
+		<option value="Łódź">
+		<option value="Jelenia Góra">
+		<option value="Poznań">
+		<option value="Warszawa">
+		<option value="Szczecin">
+		<option value="Gdańsk">
+		<option value="Białystok">
+		<option value="Lublin">
+		</datalist>
+	<br></br>
+	Kwota przelewu: 	<input type="text" id="howmany" required pattern="\d+(\.\d{2})?"> </input>
+	<br></br>
+	Data przelewu: 	<input type="text" id="date" required pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$"> </input>
+	<br></br>
+	<input type="submit" value="Submit">
+</form>
+<!-- 
+ <form action="action_page.php">
+  Username: <input type="text" name="user">
+  Encryption: <keygen name="security">
+  <input type="submit">
+</form> 
+
+ <form action="action_page.php"
+  oninput="x.value=parseInt(a.value)+parseInt(b.value)">
+  0
+  <input type="range"  id="a" name="a" value="50">
+  100 +
+  <input type="number" id="b" name="b" value="50">
+  =
+  <output name="x" for="a b"></output>
+  <br><br>
+  <input type="submit">
+
+  
+  
+  <input type="text" name="first-name" id="first-name" autofocus>
+  
+  <input type="text" name="tracking-code" id="tracking-code" autocomplete="off">
+  
+  <input type="text" id="given-name" name="given-name" required>
+  
+  
+
+<label>Your favorite fruit:
+<datalist id="fruits">
+  <option value="Blackberry">Blackberry</option>
+  <option value="Blackcurrant">Blackcurrant</option>
+  <option value="Blueberry">Blueberry</option>
+   
+</datalist>
+If other, please specify:
+  <input type="text" name="fruit" list="fruits">
+</label>
+
+<label>Your favorite fruit:
+<datalist id="fruits">
+  <select name="fruits">
+    <option value="Blackberry">Blackberry</option>
+    <option value="Blackcurrant">Blackcurrant</option>
+    <option value="Blueberry">Blueberry</option>
+    
+  </select>
+If other, please specify:
+</datalist>
+  <input type="text" name="fruit" list="fruits">
+</label>
+
+<label>Your favorite fruit:
+<datalist id="fruits">
+  <select name="fruits">
+    <option value="Blackberry">Blackberry</option>
+    <option value="Blackcurrant">Blackcurrant</option>
+    <option value="Blueberry">Blueberry</option>
+    
+  </select>
+If other, please specify:
+</datalist>
+  <input type="text" name="fruit" list="fruits" multiple>
+</label>
+
+</form>
+
+<form action="process.php">
+  <label for="email">Email:</label>
+  <input type="text" name="email" value="gordo@example.com">
+  <input type="submit" formnovalidate value="Submit">
+</form>
+
+<form action="process.php" novalidate>
+  <label for="email">Email:</label>
+  <input type="text" name="email" value="gordo@example.com">
+  <input type="submit" value="Submit">
+
+  <input type="submit" value="Submit" formenctype="application/x-www-form-urlencoded">
+  
+  <input type="submit" value="Submit" formmethod="POST">
+  
+  <input type="submit" value="Submit" formtarget="_self">
+  
+  
+  </form>
+
+<input type="submit" value="Submit" formaction="process.php">
+
+ -->
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html lang="pl"><head>
+ <title>Document</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+ <meta http-equiv="Content-Language" content="pl">
+  <style> #menu {color: blue;}
+    #content {color: yellow;}
+    #sidebar {color: green;}
+    </style>
+<script>
+
+</script></head>
+
+<body>
+  
+ 
+<div id="menu">
+  <a id="red" onclick="javascript:(function doit(el)
+  {
+    var col = el.id;
+    document.getElementById('sidebar').innerHTML += col;
+    document.getElementById('content').innerHTML = '<div style= \'height: 100px; width: 100px; background: ' + col + ';\'> </div>'
+        
+  })(this);"> Czerwony </a>
+  <a id="black" onclick="javascript:(function doit(el)
+  {
+    var col = el.id;
+    document.getElementById('sidebar').innerHTML += col;
+    document.getElementById('content').innerHTML = '<div style= \'height: 100px; width: 100px; background: ' + col + ';\'> </div>'
+        
+  })(this);"> Czarny </a>
+  <a id="brown" onclick="javascript:(function doit(el)
+  {
+    var col = el.id;
+    document.getElementById('sidebar').innerHTML += col;
+    document.getElementById('content').innerHTML = '<div style= \'height: 100px; width: 100px; background: ' + col + ';\'> </div>'
+        
+  })(this);"> Brązowy </a>
+</div>
+<div id="content"><div style="height: 100px; width: 100px; background: black;"> </div></div>
+<div id="sidebar"></div>
+
+
+
+
+
+
+
+
+</body></html>

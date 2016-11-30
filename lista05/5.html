@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<title>Simple Form</title>
+<script language="javascript" type="text/javascript">
+function checkForm (validators) {
+    var error;
+
+    validators.forEach(function (validator) {
+        if (error) {
+            return;
+        }
+		error = validator();
+    });
+
+    if (error) {
+        formError(error);
+    } else {
+        formSuccess();
+    }
+	
+	return !error;
+}
+
+function formError (error) {
+    document.getElementById('message').innerHTML = error;
+}
+
+function formSuccess () {
+    document.getElementById('message').innerHTML = ':)';
+}
+
+function fieldValue(id) {
+    return document.getElementById(id).value;
+}
+
+function validate (event) {
+	var isValid = checkForm([
+		function checkPESEL () {
+		     return !/^\d{11}$/.test(fieldValue("Pesel")) && "Podaj PESEL!";
+		},
+		function checkEmail () {
+		     return !/^\w+@\w+\.\w+$/.test(fieldValue("Email")) && "Podaj email!";
+		},
+		function checkDate () {
+		    return !/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/.test(fieldValue("Date")) && "Podaj datę!";
+		},
+		function checkAccount () {
+		    return !/^\d{26}$/.test(fieldValue("Konto")) && "Podaj nr konta!";
+		}
+	]);
+	if (!isValid) {
+		event.preventDefault();
+	}
+}
+
+</script>
+</head>
+
+<body>
+<div id="message"></div>
+<form id="formularz" name="dane" action="#">
+<table>
+<tr><td>PESEL</td><td><input type="text" name="Pesel" id="Pesel" /></td></tr>
+<tr><td>E-mail</td><td><input type="text" name="Email" id="Email" /></td></tr>
+<tr><td>Data urodzenia</td><td><input type="text" name="Date" id="Date" /></td></tr>
+<tr><td>Nr konta</td><td><input type="text" name="Konto" id="Konto">
+</td></tr>
+<tr><td colspan="2"><input type="submit" value="Zapisz" /></td></tr>
+</table>
+</form>
+
+<script>
+document.getElementById('formularz').addEventListener('submit', validate);
+document.getElementById('Pesel').addEventListener('blur', validate);
+document.getElementById('Email').addEventListener('blur', validate);
+document.getElementById('Date').addEventListener('blur', validate);
+document.getElementById('Konto').addEventListener('blur', validate);
+</script>
+</body>
+</html>

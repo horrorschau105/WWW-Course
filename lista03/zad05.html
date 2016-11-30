@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>nix</title>
+    <style>
+      html {
+        text-align:center;
+        padding:30px;
+        border:2px dashed black;
+      }
+      div {
+        line-height:60px;
+        background-color:white;
+      }
+      #rodzic {
+        padding:30px;
+        border:2px dashed red;
+		
+		
+      }
+      #dziecko11 {
+		position:relative;
+		right:100px; <!-- odsuniecie z prawej/gory o iles pixeli-->
+		bottom:10px;
+        border:1px dashed blue;
+        margin-bottom:15px;
+      }
+      #dziecko21 {
+        border:1px dashed blue;
+      }
+	  #dziecko12 {
+		position:absolute; <!-- jakby go nie bylo-->
+		bottom:0;
+		border:1px dashed blue;
+        margin-bottom:15px;
+		
+      }
+      #dziecko22 {
+        border:1px dashed blue;
+      }
+	  #dziecko13 {
+        position:fixed; <!-- fixed fixed-->
+		border:1px dashed blue;
+        margin-bottom:15px;
+      }
+      #dziecko23 {
+        border:1px dashed blue;
+      }
+	  #dziecko14 {
+        position:static; <!--default-->
+		right:100px;
+		border:1px dashed blue;
+        margin-bottom:15px;
+      }
+      #dziecko24 {
+        border:1px dashed blue;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div id="rodzic1">
+      <div id="dziecko11">to jest pierwszy element - div</div>
+      <div id="dziecko21">to jest drugi przykładowy element - div</div>
+    </div>
+<br/>
+	<div id="rodzic2">
+      <div id="dziecko12">to jest pierwszy element - div</div>
+      <div id="dziecko22">to jest drugi przykładowy element - div</div>
+    </div>
+<br/>
+	
+	<div id="rodzic3">
+      <div id="dziecko13">to jest pierwszy element - div</div>
+      <div id="dziecko23">to jest drugi przykładowy element - div</div>
+    </div>
+<br/>
+	
+	<div id="rodzic4">
+      <div id="dziecko14">to jest pierwszy element - div</div>
+      <div id="dziecko24">to jest drugi przykładowy element - div</div>
+    </div>
+	<br/>
+	<div id="rodzic5">
+      <div id="dziecko15">to jest pierwszy element - div</div>
+      <div id="dziecko25">to jest drugi przykładowy element - div</div>
+    </div>
+	<br/>
+	<div id="rodzic6">
+      <div id="dziecko16">to jest pierwszy element - div</div>
+      <div id="dziecko26">to jest drugi przykładowy element - div</div>
+    </div>
+	
+  </body>
+</html>
+
+<!-- do zadania 6
+pozycjonowanie absolutne 
+uzyc procentow, by latwo sterowac liczba produktow w rzedzie i kolumnie, i jednoczesnie sie nie martwic o ewentualne rozjechanie wszystkiego jak przy relatywnym, gdzie jestesmy zalezni od wiekszej liczby warstw (w absolute jest tylko body)
+
+-->

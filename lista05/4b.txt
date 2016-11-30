@@ -1,0 +1,37 @@
+<html lang="pl"><head>
+ <title>Document</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+ <meta http-equiv="Content-Language" content="pl">
+  <style> #menu {color: blue;}
+    #content {color: yellow;}
+    #sidebar {color: green;}
+    </style>
+<script>
+function doit(el)
+  {
+    var col = el.id;
+    document.getElementById(col).innerHTML += col;
+    document.getElementById(col).innerHTML += "<div style=\"height: 100px; width: 100px; background: " + col + ";\"> </div>"
+        
+  }
+</script></head>
+
+<body>
+  
+ 
+<div id="menu">
+  <a id="red" onclick="javascript:doit(this);"> Czerwony </a>
+  <a id="black" onclick="javascript:doit(this);"> Czarny </a>
+  <a id="brown" onclick="javascript:doit(this);"> Brązowy </a>
+</div>
+<div id="content">nix</div>
+<div id="sidebar">nix</div>
+
+
+
+
+
+
+
+
+</body></html>

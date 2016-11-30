@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+
+<title>Title of the document</title>
+<link rel="stylesheet" href="style1.css">
+<style>
+body {
+	margin: 0;
+}
+div {
+	text-align: center;
+
+	position: relative;
+	float: left;
+	width: 50%; 
+	margin-bottom: 10px;
+}
+div img {
+	transition: filter ease-in-out 400ms 100ms;
+}
+div span { 
+	transition: opacity ease-in-out 1000ms;
+	opacity: 0;
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: block;
+	transform: translateX(-50%);
+
+	color: white;
+}
+div img:hover {
+	filter: blur(10px);
+}
+div img:hover + span {
+	opacity: 1;
+}
+</style>
+</head>
+
+<body>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek1</span></div>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek2</span></div>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek3</span></div>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek4</span></div>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek5</span></div>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek6</span></div>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek7</span></div>
+<div><img src="http://placehold.it/350x150"></img><span>obrazek8</span></div>
+
+</body>
+
+</html> 

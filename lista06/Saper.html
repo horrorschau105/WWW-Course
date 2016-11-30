@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Saper!?</title>
+
+        <style>
+            body {
+                margin: 0;
+                position: fixed;
+                top:  50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            button {
+                width:  30px;
+                height: 30px;
+
+                white-space: pre;
+
+                -webkit-appearance: none;
+            }
+
+            button.disabled {
+                border-style: inset;
+            }
+
+            button.bomb {
+                background: maroon;
+            }
+			#panel {
+				text-align: center;
+			}
+			#timer{
+				text-align: center;
+			}
+        </style>
+
+        <script>
+            // [0, x] - raw, clear
+            // [1, x] - raw, bomb
+            // [2, x] - marked, clear
+            // [3, x] - marked, bomb
+            // [4, x] - clicked, clear
+            // [5, x] - clicked, bomb
+            const generator = (sizex, sizey, mines) => {
+                const map = Array.from({length: sizex}, () => Array.from({length: sizey}, () => [0, 0]));
+
+                map.mines = mines;
+				map.marked = 0;
+				map.win = true;
+				map.timer = 0;
+
+                Array.from({length: mines}, () => {
+                    let i;
+                    let j;
+
+                    do {
+                        i = ~~(Math.random() * sizex);
+                        j = ~~(Math.random() * sizey);
+                    } while (map[i][j][0] !== 0);
+
+                    map[i][j][0] = 1;
+
+                    if (map[i    ] && map[i    ][j + 1]) map[i    ][j + 1][1] += 1;
+                    if (map[i    ] && map[i    ][j - 1]) map[i    ][j - 1][1] += 1;
+                    if (map[i + 1] && map[i + 1][j    ]) map[i + 1][j    ][1] += 1;
+                    if (map[i + 1] && map[i + 1][j + 1]) map[i + 1][j + 1][1] += 1;
+                    if (map[i + 1] && map[i + 1][j - 1]) map[i + 1][j - 1][1] += 1;
+                    if (map[i - 1] && map[i - 1][j    ]) map[i - 1][j    ][1] += 1;
+                    if (map[i - 1] && map[i - 1][j + 1]) map[i - 1][j + 1][1] += 1;
+                    if (map[i - 1] && map[i - 1][j - 1]) map[i - 1][j - 1][1] += 1;
+                });
+
+                return map;
+            };
+            const render = map => {
+                
+				const map$ = document.getElementById("grid");
+				showMenu(map);
+                map$.style.width  = `${sizex * 30}px`;
+                map$.style.height = `${sizey * 30}px`;
+                map$.innerHTML = '';
+                map.forEach((row, i) =>
+                    row.forEach((_, j) =>
+                        map$.appendChild(renderSquare(map, i, j))
+                    )
+                );
+				if (map.every(row => row.every(s => s[0] > 1))) {
+					alert('Wygrałeś!');
+				
+				}
+				
+            };
+			const renderSquare = (map, i, j) => {
+                const square$ = document.createElement('button');
+				
+                if (map[i][j][0] <= 3) {
+                    square$.textContent = map[i][j][0] <= 1 ? ' ' : '|';
+                    square$.addEventListener('click',       event => showAndRender(event, map, i, j), false);
+                    square$.addEventListener('contextmenu', event => markAndRender(event, map, i, j), false);
+                } else if (map[i][j][0] === 4) {
+                    square$.textContent = map[i][j][1] || ' ';
+					square$.classList.add('disabled');
+                } else if (map[i][j][0] === 5) {
+                    square$.textContent = ' ';
+                    square$.classList.add('bomb');
+                    square$.classList.add('disabled');
+                
+                }
+
+                return square$;
+            };
+
+            const show = (map, i, j, stop = false) => {
+                if (stop || map[i][j][0] >= 2) {
+                    return;
+                }
+
+                map[i][j][0] += 4;
+
+                if (map[i][j][0] >= 5) {
+					map.win = false;
+                    return;
+                }
+
+                if (map[i    ] && map[i    ][j + 1]) show(map, i    , j + 1, map[i][j][1] > 0);
+                if (map[i    ] && map[i    ][j - 1]) show(map, i    , j - 1, map[i][j][1] > 0);
+                if (map[i + 1] && map[i + 1][j    ]) show(map, i + 1, j    , map[i][j][1] > 0);
+                if (map[i + 1] && map[i + 1][j + 1]) show(map, i + 1, j + 1, map[i][j][1] > 0);
+                if (map[i + 1] && map[i + 1][j + 1]) show(map, i + 1, j + 1, map[i][j][1] > 0);
+                if (map[i - 1] && map[i - 1][j    ]) show(map, i - 1, j    , map[i][j][1] > 0);
+                if (map[i - 1] && map[i - 1][j - 1]) show(map, i - 1, j - 1, map[i][j][1] > 0);
+                if (map[i - 1] && map[i - 1][j - 1]) show(map, i - 1, j - 1, map[i][j][1] > 0);
+            };
+			
+			const updateTime = (timer) =>
+				{ 
+				timer.innerHTML -= (-1);
+				}
+			const showMenu = (map) => {
+				var button = document.createElement('button');
+				var count  = document.createElement('button');
+				var panel  = document.getElementById("panel");
+				
+				panel.innerHTML = '';
+				
+				button.innerHTML = map.win ? ':)' : ':(';
+				button.addEventListener('click', () => {render(generator(sizex, sizey, mines));
+														document.getElementById("timer").innerHTML = map.timer = 0;
+														clearInterval()
+														}, false);
+				count.innerHTML = map.marked;
+				
+				//timer.innerHTML = 0;
+				
+				//panel.appendChild(timer);
+				panel.appendChild(button);
+				panel.appendChild(count);
+			};
+
+            const showAndRender = (event, map, i, j) => {
+                event.preventDefault();
+
+                show(map, i, j);
+
+                render(map);
+            };
+
+            const markAndRender = (event, map, i, j) => {
+                event.preventDefault();
+
+                if (map[i][j][0] <= 1) {
+                    if (map.reduce((acc, row) => acc + row.reduce((acc, s) => acc + (s[0] === 2 || s[0] === 3), 0), 0) < map.mines) {
+                        map[i][j][0] += 2;
+						map.marked+=1;
+                    }
+                } else {
+                    map[i][j][0] -= 2;
+					map.marked-=1;
+                }
+
+                render(map);
+            };
+			setInterval( () => updateTime(document.getElementById("timer")) , 1000);
+            const sizex =  16; //  8, 16, 30
+            const sizey =  16; //  8, 16, 16
+            const mines = 40; // 10, 40, 99
+		
+
+            window.addEventListener('DOMContentLoaded', () => render(generator(sizex, sizey, mines)), false);
+        </script>
+		
+    </head>
+	<div> <button id="timer"> 0 </button></div>
+	<div id="panel"></div>
+	<div id="grid"> </div>
+</html>
