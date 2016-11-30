@@ -39,154 +39,147 @@
 
         <script>
             // [0, x] - raw, clear
-            // [1, x] - raw, bomb
-            // [2, x] - marked, clear
-            // [3, x] - marked, bomb
-            // [4, x] - clicked, clear
-            // [5, x] - clicked, bomb
-            const generator = (sizex, sizey, mines) => {
-                const map = Array.from({length: sizex}, () => Array.from({length: sizey}, () => [0, 0]));
-
-                map.mines = mines;
-				map.marked = 0;
-				map.win = true;
-				map.timer = 0;
-
-                Array.from({length: mines}, () => {
-                    let i;
-                    let j;
-
-                    do {
-                        i = ~~(Math.random() * sizex); // rzut double na inta
-                        j = ~~(Math.random() * sizey);
-                    } while (map[i][j][0] !== 0);
-
-                    map[i][j][0] = 1;
-
-                    if (map[i    ] && map[i    ][j + 1]) map[i    ][j + 1][1] += 1;
-                    if (map[i    ] && map[i    ][j - 1]) map[i    ][j - 1][1] += 1;
-                    if (map[i + 1] && map[i + 1][j    ]) map[i + 1][j    ][1] += 1;
-                    if (map[i + 1] && map[i + 1][j + 1]) map[i + 1][j + 1][1] += 1;
-                    if (map[i + 1] && map[i + 1][j - 1]) map[i + 1][j - 1][1] += 1;
-                    if (map[i - 1] && map[i - 1][j    ]) map[i - 1][j    ][1] += 1;
-                    if (map[i - 1] && map[i - 1][j + 1]) map[i - 1][j + 1][1] += 1;
-                    if (map[i - 1] && map[i - 1][j - 1]) map[i - 1][j - 1][1] += 1;
-                });
-
-                return map;
-            };
-            const render = map => {
-                
-				const map$ = document.getElementById("grid");
-				showMenu(map);
-                map$.style.width  = `${sizex * 30}px`;
-                map$.style.height = `${sizey * 30}px`;
-                map$.innerHTML = '';
-                map.forEach((row, i) =>
-                    row.forEach((_, j) =>
-                        map$.appendChild(renderSquare(map, i, j))
-                    )
-                );
-				if (map.every(row => row.every(s => s[0] > 1))) {
-					alert('Wygrałeś!');
-				
-				}
-				
-            };
-			const renderSquare = (map, i, j) => {
-                const square$ = document.createElement('button');
-				
-                if (map[i][j][0] <= 3) {
-                    square$.textContent = map[i][j][0] <= 1 ? ' ' : 'X';
-                    square$.addEventListener('click',       event => showAndRender(event, map, i, j), false);
-                    square$.addEventListener('contextmenu', event => markAndRender(event, map, i, j), false);
-                } else if (map[i][j][0] === 4) {
-                    square$.textContent = map[i][j][1] || ' ';
-					square$.classList.add('disabled');
-                } else if (map[i][j][0] === 5) {
-                    square$.textContent = ' ';
-                    square$.classList.add('bomb');
-                    square$.classList.add('disabled');
-                
-                }
-
-                return square$;
-            };
-
-            const show = (map, i, j, stop = false) => {
-                if (stop || map[i][j][0] >= 2) {
-                    return;
-                }
-
-                map[i][j][0] += 4;
-
-                if (map[i][j][0] >= 5) {
-					map.win = false; // przegrana przy trafieniu bomby
-                    return;
-                }
-
-                if (map[i    ] && map[i    ][j + 1]) show(map, i    , j + 1, map[i][j][1] > 0);
-                if (map[i    ] && map[i    ][j - 1]) show(map, i    , j - 1, map[i][j][1] > 0);
-                if (map[i + 1] && map[i + 1][j    ]) show(map, i + 1, j    , map[i][j][1] > 0);
-                if (map[i + 1] && map[i + 1][j + 1]) show(map, i + 1, j + 1, map[i][j][1] > 0);
-                if (map[i + 1] && map[i + 1][j + 1]) show(map, i + 1, j + 1, map[i][j][1] > 0);
-                if (map[i - 1] && map[i - 1][j    ]) show(map, i - 1, j    , map[i][j][1] > 0);
-                if (map[i - 1] && map[i - 1][j - 1]) show(map, i - 1, j - 1, map[i][j][1] > 0);
-                if (map[i - 1] && map[i - 1][j - 1]) show(map, i - 1, j - 1, map[i][j][1] > 0);
-            };
-			
-			const updateTime = (timer) =>
-				{ 
-				timer.innerHTML -= (-1); 
-				}
-			const showMenu = (map) => {
-				var button = document.createElement('button');
-				var count  = document.createElement('button');
-				var panel  = document.getElementById("panel");
-				
-				panel.innerHTML = '';
-				
-				button.innerHTML = map.win ? ':)' : ':(';
-				button.addEventListener('click', () => {render(generator(sizex, sizey, mines));
-														document.getElementById("timer").innerHTML = map.timer = 0;
-														clearInterval()
-														}, false);
-				count.innerHTML = map.marked;
-				panel.appendChild(button);
-				panel.appendChild(count);
-			};
-
-            const showAndRender = (event, map, i, j) => {
-                event.preventDefault();
-
-                show(map, i, j);
-
-                render(map);
-            };
-
-            const markAndRender = (event, map, i, j) => {
-                event.preventDefault();
-
-                if (map[i][j][0] <= 1) {
-                    if (map.reduce((acc, row) => acc + row.reduce((acc, s) => acc + (s[0] === 2 || s[0] === 3), 0), 0) < map.mines) {
-                        map[i][j][0] += 2;
-						map.marked+=1;
-                    }
-                } else {
-                    map[i][j][0] -= 2;
-					map.marked-=1;
-                }
-
-                render(map);
-            };
-			setInterval( () => updateTime(document.getElementById("timer")) , 1000);
-            const sizex =  16; //  8, 16, 30
-            const sizey =  16; //  8, 16, 16
-            const mines = 40; // 10, 40, 99
-		
-
-            window.addEventListener('DOMContentLoaded', () => render(generator(sizex, sizey, mines)), false);
-        </script>
+// [1, x] - raw, bomb
+// [2, x] - marked, clear
+// [3, x] - marked, bomb
+// [4, x] - clicked, clear
+// [5, x] - clicked, bomb
+var generator = function (sizex, sizey, mines) {
+    var map = Array.from({ length: sizex }, function () { return Array.from({ length: sizey }, function () { return [0, 0]; }); });
+    map.mines = mines;
+    map.marked = 0;
+    map.win = true;
+    map.timer = 0;
+    Array.from({ length: mines }, function () {
+        var i;
+        var j;
+        do {
+            i = ~~(Math.random() * sizex); // rzut double na inta
+            j = ~~(Math.random() * sizey);
+        } while (map[i][j][0] !== 0);
+        map[i][j][0] = 1;
+        if (map[i] && map[i][j + 1])
+            map[i][j + 1][1] += 1;
+        if (map[i] && map[i][j - 1])
+            map[i][j - 1][1] += 1;
+        if (map[i + 1] && map[i + 1][j])
+            map[i + 1][j][1] += 1;
+        if (map[i + 1] && map[i + 1][j + 1])
+            map[i + 1][j + 1][1] += 1;
+        if (map[i + 1] && map[i + 1][j - 1])
+            map[i + 1][j - 1][1] += 1;
+        if (map[i - 1] && map[i - 1][j])
+            map[i - 1][j][1] += 1;
+        if (map[i - 1] && map[i - 1][j + 1])
+            map[i - 1][j + 1][1] += 1;
+        if (map[i - 1] && map[i - 1][j - 1])
+            map[i - 1][j - 1][1] += 1;
+    });
+    return map;
+};
+var render = function (map) {
+    var map$ = document.getElementById("grid");
+    showMenu(map);
+    map$.style.width = sizex * 30 + "px";
+    map$.style.height = sizey * 30 + "px";
+    map$.innerHTML = '';
+    map.forEach(function (row, i) {
+        return row.forEach(function (_, j) {
+            return map$.appendChild(renderSquare(map, i, j));
+        });
+    });
+    if (map.every(function (row) { return row.every(function (s) { return s[0] > 1; }); })) {
+        alert('Wygrałeś!');
+    }
+};
+var renderSquare = function (map, i, j) {
+    var square$ = document.createElement('button');
+    if (map[i][j][0] <= 3) {
+        square$.textContent = map[i][j][0] <= 1 ? ' ' : 'X';
+        square$.addEventListener('click', function (event) { return showAndRender(event, map, i, j); }, false);
+        square$.addEventListener('contextmenu', function (event) { return markAndRender(event, map, i, j); }, false);
+    }
+    else if (map[i][j][0] === 4) {
+        square$.textContent = map[i][j][1] || ' ';
+        square$.classList.add('disabled');
+    }
+    else if (map[i][j][0] === 5) {
+        square$.textContent = ' ';
+        square$.classList.add('bomb');
+        square$.classList.add('disabled');
+    }
+    return square$;
+};
+var show = function (map, i, j, stop) {
+    if (stop === void 0) { stop = false; }
+    if (stop || map[i][j][0] >= 2) {
+        return;
+    }
+    map[i][j][0] += 4;
+    if (map[i][j][0] >= 5) {
+        map.win = false; // przegrana przy trafieniu bomby
+        return;
+    }
+    if (map[i] && map[i][j + 1])
+        show(map, i, j + 1, map[i][j][1] > 0);
+    if (map[i] && map[i][j - 1])
+        show(map, i, j - 1, map[i][j][1] > 0);
+    if (map[i + 1] && map[i + 1][j])
+        show(map, i + 1, j, map[i][j][1] > 0);
+    if (map[i + 1] && map[i + 1][j + 1])
+        show(map, i + 1, j + 1, map[i][j][1] > 0);
+    if (map[i + 1] && map[i + 1][j + 1])
+        show(map, i + 1, j + 1, map[i][j][1] > 0);
+    if (map[i - 1] && map[i - 1][j])
+        show(map, i - 1, j, map[i][j][1] > 0);
+    if (map[i - 1] && map[i - 1][j - 1])
+        show(map, i - 1, j - 1, map[i][j][1] > 0);
+    if (map[i - 1] && map[i - 1][j - 1])
+        show(map, i - 1, j - 1, map[i][j][1] > 0);
+};
+var updateTime = function (timer) {
+    timer.innerHTML -= (-1);
+};
+var showMenu = function (map) {
+    var button = document.createElement('button');
+    var count = document.createElement('button');
+    var panel = document.getElementById("panel");
+    panel.innerHTML = '';
+    button.innerHTML = map.win ? ':)' : ':(';
+    button.addEventListener('click', function () {
+        render(generator(sizex, sizey, mines));
+        document.getElementById("timer").innerHTML = "0";
+        map.timer = 0;
+    }, false);
+    count.innerHTML = (map.mines-map.marked);
+    panel.appendChild(button);
+    panel.appendChild(count);
+};
+var showAndRender = function (event, map, i, j) {
+    event.preventDefault();
+    show(map, i, j);
+    render(map);
+};
+var markAndRender = function (event, map, i, j) {
+    event.preventDefault();
+    if (map[i][j][0] <= 1) {
+        if (map.reduce(function (acc, row) { return acc + row.reduce(function (acc, s) { return acc + (s[0] === 2 || s[0] === 3); }, 0); }, 0) < map.mines) {
+            map[i][j][0] += 2;
+            map.marked += 1;
+        }
+    }
+    else {
+        map[i][j][0] -= 2;
+        map.marked -= 1;
+    }
+    render(map);
+};
+setInterval(function () { return updateTime(document.getElementById("timer")); }, 1000);
+var sizex = 16; //  8, 16, 30
+var sizey = 16; //  8, 16, 16
+var mines = 40; // 10, 40, 99
+window.addEventListener('DOMContentLoaded', function () { return render(generator(sizex, sizey, mines)); }, false);
+</script>
 		
     </head>
 	<div> <button id="timer" text-align="left"> 0 </button></div>
