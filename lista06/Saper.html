@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Saper!?</title>
+        <title>Saperro</title>
 
         <style>
             body {
@@ -33,7 +33,7 @@
 				text-align: center;
 			}
 			#timer{
-				text-align: center;
+				text-align: right;
 			}
         </style>
 
@@ -57,7 +57,7 @@
                     let j;
 
                     do {
-                        i = ~~(Math.random() * sizex);
+                        i = ~~(Math.random() * sizex); // rzut double na inta
                         j = ~~(Math.random() * sizey);
                     } while (map[i][j][0] !== 0);
 
@@ -97,7 +97,7 @@
                 const square$ = document.createElement('button');
 				
                 if (map[i][j][0] <= 3) {
-                    square$.textContent = map[i][j][0] <= 1 ? ' ' : '|';
+                    square$.textContent = map[i][j][0] <= 1 ? ' ' : 'X';
                     square$.addEventListener('click',       event => showAndRender(event, map, i, j), false);
                     square$.addEventListener('contextmenu', event => markAndRender(event, map, i, j), false);
                 } else if (map[i][j][0] === 4) {
@@ -121,7 +121,7 @@
                 map[i][j][0] += 4;
 
                 if (map[i][j][0] >= 5) {
-					map.win = false;
+					map.win = false; // przegrana przy trafieniu bomby
                     return;
                 }
 
@@ -137,7 +137,7 @@
 			
 			const updateTime = (timer) =>
 				{ 
-				timer.innerHTML -= (-1);
+				timer.innerHTML -= (-1); 
 				}
 			const showMenu = (map) => {
 				var button = document.createElement('button');
@@ -193,7 +193,7 @@
         </script>
 		
     </head>
-	<div> <button id="timer"> 0 </button></div>
+	<div> <button id="timer" text-align="left"> 0 </button></div>
 	<div id="panel"></div>
 	<div id="grid"> </div>
 </html>
