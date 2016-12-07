@@ -1,0 +1,2 @@
+DOMENA - (II.UNI.WROC) LUB (WROC) / .pl
+nie mozna czytac ciasteczek nalezacych do innej domeny
