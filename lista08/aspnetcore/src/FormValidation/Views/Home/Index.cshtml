@@ -1,4 +1,4 @@
-﻿@model FormValidation.Models.Person
+﻿@model FormValidation.Models.Car
 <!DOCTYPE html >
 <html>
 <head>
@@ -9,10 +9,11 @@
     {
         @Html.ValidationSummary()
         <table border="1">
-            <tr><td>@Html.LabelFor(e => e.FirstName)</td><td>@Html.EditorFor(e => e.FirstName) @Html.ValidationMessageFor(model => model.FirstName)</td></tr>
-            <tr><td>@Html.LabelFor(e => e.LastName)</td><td>@Html.EditorFor(e => e.LastName) @Html.ValidationMessageFor(model => model.LastName)</td></tr>
-            <tr><td>@Html.LabelFor(e => e.Email)</td><td>@Html.EditorFor(e => e.Email) @Html.ValidationMessageFor(model => model.Email)</td></tr>
-            <tr><td>@Html.LabelFor(e => e.PostalCode)</td><td>@Html.EditorFor(e => e.PostalCode) @Html.ValidationMessageFor(model => model.PostalCode)</td></tr>
+            <tr><td>@Html.LabelFor(e => e.Date)</td><td>@Html.EditorFor(e => e.Date) @Html.ValidationMessageFor(model => model.Date)</td></tr>
+            <tr><td>@Html.LabelFor(e => e.Fuel)</td><td>@Html.EditorFor(e => e.Fuel) @Html.ValidationMessageFor(model => model.Fuel)</td></tr>
+            <tr><td>@Html.LabelFor(e => e.Producent)</td><td>@Html.EditorFor(e => e.Producent) @Html.ValidationMessageFor(model => model.Producent)</td></tr>
+            <tr><td>@Html.LabelFor(e => e.RegNum)</td><td>@Html.EditorFor(e => e.RegNum) @Html.ValidationMessageFor(model => model.RegNum)</td></tr>
+            <tr><td>@Html.LabelFor(e => e.Year)</td><td>@Html.EditorFor(e => e.Year) @Html.ValidationMessageFor(model => model.Year)</td></tr>
         </table>
         <input type="submit" />
         @Html.AntiForgeryToken()

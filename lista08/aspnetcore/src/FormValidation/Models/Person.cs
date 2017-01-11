@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 
 namespace FormValidation.Models
 {
-    public class Person
-    {
+    public class Car
+    {   // nr rejestracyjny / data / marka / rok / rodzaj paliwa
         public int Id { get; set; }
-        [Required(ErrorMessage = "Podaj swoje imię")]
-        public string FirstName { get; set; }
-        [Required(ErrorMessage = "Podaj swoje nazwisko")]
-        public string LastName { get; set; }
-        [Required(ErrorMessage = "Podaj swój e-mail")]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Podany e-mail jest niepoprawny")]
-        public string Email { get; set; }
-        [Required(ErrorMessage = "Podaj kod pocztowy")]
-        [RegularExpression("[0-9]{2}-[0-9]{3}", ErrorMessage = "Podany kod pocztowy jest niepoprawny")]
-        [Display(Name = "Kod pocztowy")]
-        public string PostalCode { get; set; }
+        [Required]
+        [RegularExpression("[a-zA-Z]{2,3}[0-9]{4,6}", ErrorMessage = "Podany kod pocztowy jest niepoprawny")]
+        public string RegNum { get; set; }
+        [Required]
+        [RegularExpression("[0-9]{2}-[0-9]{2}-[0-9]{4}", ErrorMessage = "Podany nr rejestracyjny jest niepoprawny")]
+        public string Date { get; set; }
+        [Required]
+        [RegularExpression("[a-zA-Z]{1,40}", ErrorMessage = "Podany kod pocztowy jest niepoprawny")]
+        public string Producent { get; set; }
+        [Required]
+        public int Year { get; set; }
+        [Required]
+        public string Fuel { get; set; }
+
+        
     }
 }
