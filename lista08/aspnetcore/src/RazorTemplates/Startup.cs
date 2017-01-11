@@ -55,6 +55,16 @@ namespace RazorTemplates
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "galery-route",
+                    template: "galery",
+                    defaults: new { controller = "Home", action = "Galery" });
+
+                routes.MapRoute(
+                    name: "contact-route",
+                    template: "contact",
+                    defaults: new { controller = "Home", action = "Contact" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

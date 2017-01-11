@@ -17,16 +17,15 @@ namespace FormValidation.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Person person)
+        public ActionResult Index(Car car)
         {
-            if (!string.IsNullOrEmpty(person.PostalCode) && !person.PostalCode.StartsWith("5"))
-                ModelState.AddModelError("PostalCode", "Kod pocztowy nie jest z Wrocławia");
-            // Oglądamy zawartość ModelState pod debuggerem
+            if (car.Year < 1900 || car.Year > 2100)
+                ModelState.AddModelError("Year", "Zły rok");
+            if (!new List<string> { "P", "ON", "LPG", "EE" }.Contains(car.Fuel)) 
+                ModelState.AddModelError("Fuel", "Złe paliwo");
             if (ModelState.IsValid)
             {
-            }
-            else
-            {
+                return View("Success");
             }
             return View();
         }
