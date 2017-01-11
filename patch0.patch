@@ -1,0 +1,41 @@
+diff --cc lista08/aspnetcore/.vs/aspnetcore/v14/.suo
+index 23b917e,2e30476..0000000
+Binary files differ
+diff --cc lista08/aspnetcore/.vs/config/applicationhost.config
+index 96a7eaa,ed73a75..0000000
+--- a/lista08/aspnetcore/.vs/config/applicationhost.config
++++ b/lista08/aspnetcore/.vs/config/applicationhost.config
+@@@ -296,30 -296,6 +296,33 @@@
+                      <binding protocol="http" bindingInformation="*:32537:localhost" />
+                  </bindings>
+              </site>
+++<<<<<<< HEAD
+ +            <site name="RazorTemplates(1)" id="19">
+ +                <application path="/" applicationPool="Clr4IntegratedAppPool">
+ +                    <virtualDirectory path="/" physicalPath="C:\Piotrek\kody\www\WWW Course\lista08\aspnetcore\src\RazorTemplates" />
+ +                </application>
+ +                <bindings>
+ +                    <binding protocol="http" bindingInformation="*:22389:localhost" />
+ +                </bindings>
+ +            </site>
+ +            <site name="l8z3" id="20">
+ +                <application path="/" applicationPool="Clr4IntegratedAppPool">
+ +                    <virtualDirectory path="/" physicalPath="C:\Piotrek\kody\www\kurs-www-zadanka\L8\aspnetcore\src\l8z3" />
+ +                </application>
+ +                <bindings>
+ +                    <binding protocol="http" bindingInformation="*:50921:localhost" />
+ +                </bindings>
+ +            </site>
+ +            <site name="l8z3(1)" id="21">
+ +                <application path="/" applicationPool="Clr4IntegratedAppPool">
+ +                    <virtualDirectory path="/" physicalPath="C:\Piotrek\kody\www\WWW Course\lista08\aspnetcore\src\l8z3" />
+ +                </application>
+ +                <bindings>
+ +                    <binding protocol="http" bindingInformation="*:50921:localhost" />
+ +                </bindings>
+ +            </site>
+++=======
+++>>>>>>> 371a542ca0270b4e4538f1160d015ef785220c99
+              <siteDefaults>
+                  <logFile logFormat="W3C" directory="%IIS_USER_HOME%\Logs" />
+                  <traceFailedRequestsLogging directory="%IIS_USER_HOME%\TraceLogFiles" enabled="true" maxLogFileSizeKB="1024" />
